@@ -15,6 +15,7 @@ export default defineConfig({
 		proxy: {
 			"/api": {
 				target: "https://matalwallet.duckdns.org/metal-wallet-server",
+				crossOriginIsolated: true,
 				secure: true, // HTTPS 사용
 				rewrite: (path) => path.replace(/^\/api/, "api"), // '/api' 경로 유지
 			},
