@@ -10,8 +10,14 @@ export const useMusicalsStore = defineStore("musicals", {
 	actions: {
 		async fetchMusicals() {
 			try {
+				const token = localStorage.getItem("accessToken");
 				const response = await axios.get(
-					`https://matalwallet.duckdns.org/metal-wallet-server/api/musicals?size=10`
+					`https://matalwallet.duckdns.org/metal-wallet-server/api/musicals?size=10`,
+					{
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					}
 				);
 				const apiData = response.data.result.data;
 
