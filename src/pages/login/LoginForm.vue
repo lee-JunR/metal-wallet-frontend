@@ -79,7 +79,7 @@ export default defineComponent({
                 return;
             }
             try {
-                // const response = await axios.post(`${API_BASE_URL}/members/login`, this.formData);
+                // const response = await axios.post(`https://matalwallet.duckdns.org/metal-wallet-server/api/members/login`, this.formData);
                 const response = await axios.post(`https://matalwallet.duckdns.org/metal-wallet-server/api/members/login`, this.formData);
                 console.log('Login successful:', response.data);
 

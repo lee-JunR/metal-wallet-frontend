@@ -7,14 +7,9 @@
     <!-- Container for all Frames -->
     <div :class="$style.framesContainer" @scroll="handleScroll">
       <div v-for="musical in musicals" :key="musical.id" class="frame-item">
-        <Frame
-          :posterImage="musical.posterImageUrl"
-          :title="musical.title"
-          :place="musical.place"
-          :placeDetail="musical.placeDetail"
-          :dates="`${musical.ticketingStartDate} ~ ${musical.ticketingEndDate}`"
-          @click="redirectToDetail(musical.id)"
-        />
+        <Frame :posterImage="musical.posterImageUrl" :title="musical.title" :place="musical.place"
+          :placeDetail="musical.placeDetail" :dates="`${musical.ticketingStartDate} ~ ${musical.ticketingEndDate}`"
+          @click="redirectToDetail(musical.id)" />
       </div>
     </div>
 
@@ -45,8 +40,8 @@ export default defineComponent({
       if (this.isLoading) return;
       this.isLoading = true;
       const url = cursor
-        ? `${API_BASE_URL}/musicals?cursor=${cursor}&size=${this.size}`
-        : `${API_BASE_URL}/musicals?size=${this.size}`;
+        ? `https://matalwallet.duckdns.org/metal-wallet-server/api/musicals?cursor=${cursor}&size=${this.size}`
+        : `https://matalwallet.duckdns.org/metal-wallet-server/api/musicals?size=${this.size}`;
 
       try {
         const response = await fetch(url);
@@ -142,10 +137,12 @@ body {
   position: absolute;
   top: 40px;
   bottom: 80px;
-  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
 }
 
 .frame-item {
-  flex: 0 1 300px; /* Adjust width as needed */
+  flex: 0 1 300px;
+  /* Adjust width as needed */
 }
 </style>

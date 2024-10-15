@@ -12,7 +12,7 @@ export const useTicketStore = defineStore("tickets", {
 			try {
 				const token = localStorage.getItem("accessToken");
 
-				const url = `${API_BASE_URL}/tickets`;
+				const url = `https://matalwallet.duckdns.org/metal-wallet-server/api/tickets`;
 				const response = await axios.get(url, {
 					headers: {
 						Authorization: `Bearer ${token}`,

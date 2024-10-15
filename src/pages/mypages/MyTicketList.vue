@@ -59,12 +59,12 @@ export default defineComponent({
         },
         async confirmCancel() {
             try {
-                const response = await axios.delete(`${API_BASE_URL}/tickets/${this.selectedTicketId}`, {
+                const response = await axios.delete(`https://matalwallet.duckdns.org/metal-wallet-server/api/tickets/${this.selectedTicketId}`, {
                     headers: {
                         Authorization: `Bearer ${this.token}`
                     }
                 });
-                await this.fetchTickets(this.nextCursor,true);
+                await this.fetchTickets(this.nextCursor, true);
                 alert('티켓이 취소되었습니다.');
                 this.closeCancelDialog();
             } catch (error) {
@@ -124,7 +124,8 @@ body {
     overflow: auto;
     padding: 10px;
     top: 37px;
-    scrollbar-width: none;  /* Firefox */
+    scrollbar-width: none;
+    /* Firefox */
     -ms-overflow-style: none;
 }
 

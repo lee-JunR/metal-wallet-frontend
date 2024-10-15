@@ -106,7 +106,7 @@ export default defineComponent({
 		async fetchMusical(id) {
 			try {
 				const response = await fetch(
-					`${API_BASE_URL}/musicals/${id}`
+					`https://matalwallet.duckdns.org/metal-wallet-server/api/musicals/${id}`
 				);
 				if (!response.ok) throw new Error("Network response was not ok");
 				const { result } = await response.json();

@@ -152,7 +152,7 @@ export default defineComponent({
 				const deviceInfo = "temp";
 
 				const response = await axios.post(
-					`${API_BASE_URL}/tickets/encrypt/${ticketId}`,
+					`https://matalwallet.duckdns.org/metal-wallet-server/api/tickets/encrypt/${ticketId}`,
 					{
 						deviceId: deviceInfo
 					},

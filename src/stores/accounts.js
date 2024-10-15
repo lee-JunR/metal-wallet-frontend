@@ -5,44 +5,47 @@ import { defineStore } from "pinia";
 import axios from "axios";
 
 const logos = {
-  kb: kbLogo,
-  kakao: kakaoLogo,
-  toss: tossLogo,
+	kb: kbLogo,
+	kakao: kakaoLogo,
+	toss: tossLogo,
 };
 
 export const useAccountStore = defineStore("account", {
-  state: () => ({
-    accounts: [],
-    isLoading: false,
-    error: null,
-  }),
-  actions: {
-    async fetchAccounts() {
-      this.isLoading = true;
-      this.error = null;
-      try {
-        const token = localStorage.getItem("accessToken");
+	state: () => ({
+		accounts: [],
+		isLoading: false,
+		error: null,
+	}),
+	actions: {
+		async fetchAccounts() {
+			this.isLoading = true;
+			this.error = null;
+			try {
+				const token = localStorage.getItem("accessToken");
 
-        const response = await axios.get(`${API_BASE_URL}/accounts`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+				const response = await axios.get(
+					`https://matalwallet.duckdns.org/metal-wallet-server/api/accounts`,
+					{
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				);
 
-        if (response.data && response.data.resultCode === 200) {
-          this.accounts = response.data.result.map((account) => ({
-            ...account,
-            isUsed: false,
-          }));
-        } else {
-          this.error = response.data.resultMsg || "Failed to fetch accounts";
-        }
-      } catch (error) {
-        this.error = error;
-        console.error("Error fetching accounts:", error);
-      } finally {
-        this.isLoading = false;
-      }
-    },
-  },
+				if (response.data && response.data.resultCode === 200) {
+					this.accounts = response.data.result.map((account) => ({
+						...account,
+						isUsed: false,
+					}));
+				} else {
+					this.error = response.data.resultMsg || "Failed to fetch accounts";
+				}
+			} catch (error) {
+				this.error = error;
+				console.error("Error fetching accounts:", error);
+			} finally {
+				this.isLoading = false;
+			}
+		},
+	},
 });

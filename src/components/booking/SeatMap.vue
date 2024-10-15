@@ -2,21 +2,16 @@
   <div class="seat-map">
     <div class="section" v-for="(row, rowIndex) in seatLayout" :key="rowIndex">
       <div class="row">
-        <div
-          v-for="(seat, seatIndex) in row"
-          :key="seatIndex"
-          :class="[
-            'seat',
-            seat ? seat.type : '',
-            { selected: seat && seat.selected },
-            { empty: !seat },
-            {
-              disabled:
-                seat && (seat.booked || (!seat.selected && isMaxSelected)),
-            },
-          ]"
-          @click="toggleSeat(rowIndex, seatIndex)"
-        ></div>
+        <div v-for="(seat, seatIndex) in row" :key="seatIndex" :class="[
+          'seat',
+          seat ? seat.type : '',
+          { selected: seat && seat.selected },
+          { empty: !seat },
+          {
+            disabled:
+              seat && (seat.booked || (!seat.selected && isMaxSelected)),
+          },
+        ]" @click="toggleSeat(rowIndex, seatIndex)"></div>
       </div>
     </div>
   </div>
@@ -176,7 +171,7 @@ OOXOOOOOOOOOOOOOOOXOO
       const scheduleId = this.scheduleId;
       try {
         const response = await axios.get(
-          `${API_BASE_URL}/musicals/schedules/${scheduleId}/seats`
+          `https://matalwallet.duckdns.org/metal-wallet-server/api/musicals/schedules/${scheduleId}/seats`
         );
 
         if (response && response.data && Array.isArray(response.data.result)) {

@@ -11,7 +11,7 @@ export const useMusicalsStore = defineStore("musicals", {
 		async fetchMusicals() {
 			try {
 				const response = await axios.get(
-					`${API_BASE_URL}/musicals?size=10`
+					`https://matalwallet.duckdns.org/metal-wallet-server/api/musicals?size=10`
 				);
 				const apiData = response.data.result.data;
 
