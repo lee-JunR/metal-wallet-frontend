@@ -110,7 +110,7 @@ export default defineComponent({
 
       try {
         const response = await axios.post(
-          `https://matalwallet.duckdns.org/metal-wallet-server/members/pin-number-verification`,
+          `https://matalwallet.duckdns.org/metal-wallet-server/api/members/pin-number-verification`,
           { pinNumber, deviceInfo },
           {
             headers: {
