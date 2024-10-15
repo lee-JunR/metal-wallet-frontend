@@ -37,6 +37,23 @@ import { useRouter } from 'vue-router';
 import MainHeader from '../../components/MainHeader.vue';
 import axios from 'axios';
 
+const apiClient = axios.create({
+    baseURL: API_BASE_URL,
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+    },
+});
+
+// 요청 인터셉터 추가
+apiClient.interceptors.request.use((config) => {
+    const token = localStorage.getItem('accessToken');
+    if (token && config.headers) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+});
+
 export default defineComponent({
     name: "SignupForm",
     components: {
@@ -67,11 +84,9 @@ export default defineComponent({
     },
     methods: {
         updateEmail() {
-            if (this.selectedEmailDomain) {
-                this.formData.email = `${this.emailPrefix}${this.selectedEmailDomain}`;
-            } else {
-                this.formData.email = this.emailPrefix;
-            }
+            this.formData.email = this.selectedEmailDomain
+                ? `${this.emailPrefix}${this.selectedEmailDomain}`
+                : this.emailPrefix;
         },
         async login() {
             if (!this.isFormValid) {
@@ -79,39 +94,29 @@ export default defineComponent({
                 return;
             }
             try {
-                // const response = await axios.post(`${API_BASE_URL}/members/login`, this.formData);
-                const response = await axios.post(`${API_BASE_URL}/members/login`, this.formData);
-                console.log('Login successful:', response.data);
-
+                const response = await apiClient.post('/members/login', this.formData);
                 if (response.data.accessToken) {
                     localStorage.setItem('accessToken', response.data.accessToken);
-                    this.router.push({ name: 'home' });
+                    this.$router.push({ name: 'home' });
                 } else {
                     console.error('Access token not found in response');
                 }
             } catch (error) {
-                //TODO: vue error는 response가 없어서 수정해야함
-                console.error('Error login member:', error.response.data);
+                console.error('Error logging in:', error.response ? error.response.data : error.message);
             }
         },
         goToSignup() {
-            this.router.push('/signup');
+            this.$router.push('/signup');
         }
     },
     computed: {
         isFormValid() {
-            return (
-                this.formData.email &&
-                this.formData.password
-            );
+            return this.formData.email && this.formData.password;
         }
     },
     setup() {
         const router = useRouter();
-
-        return {
-            router,
-        };
+        return { router };
     }
 })
 </script>
