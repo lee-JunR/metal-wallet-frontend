@@ -8,7 +8,7 @@
       <p :class="$style.text">
         <span :class="$style.highlight">{{
           firstInput ? "입력" : "다시 한번 입력"
-        }}</span>
+          }}</span>
         <span>해주세요.</span>
       </p>
     </b>
@@ -110,7 +110,7 @@ export default defineComponent({
 
       try {
         const response = await axios.post(
-          `${__API_BASE_URL__}/members/pin-number-verification`,
+          `https://matalwallet.duckdns.org/metal-wallet-server/members/pin-number-verification`,
           { pinNumber, deviceInfo },
           {
             headers: {
@@ -139,7 +139,7 @@ export default defineComponent({
 
       try {
         const response = await axios.post(
-          `${__API_BASE_URL__}/tickets`,
+          `https://matalwallet.duckdns.org/metal-wallet-server/tickets`,
           formData,
           {
             headers: {
