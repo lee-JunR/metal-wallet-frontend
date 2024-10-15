@@ -78,20 +78,23 @@ export default defineComponent({
                 alert('이메일과 비밀번호를 입력해주세요.');
                 return;
             }
+
             try {
-                // const response = await axios.post(`https://matalwallet.duckdns.org/metal-wallet-server/api/members/login`, this.formData);
-                const response = await axios.post(`https://matalwallet.duckdns.org/metal-wallet-server/api/members/login`, this.formData);
+                // 로그인 API 요청
+                const response = await axios.post('https://matalwallet.duckdns.org/metal-wallet-server/api/members/login', this.formData);
                 console.log('Login successful:', response.data);
 
                 if (response.data.accessToken) {
+                    // 액세스 토큰을 로컬 스토리지에 저장
                     localStorage.setItem('accessToken', response.data.accessToken);
-                    this.router.push({ name: 'home' });
+
+                    // Home 페이지로 리디렉션
+                    this.$router.push({ name: 'home' });
                 } else {
                     console.error('Access token not found in response');
                 }
             } catch (error) {
-                //TODO: vue error는 response가 없어서 수정해야함
-                console.error('Error login member:', error.response.data);
+                console.error('Error login member:', error.response ? error.response.data : error);
             }
         },
         goToSignup() {
