@@ -25,14 +25,15 @@
                 </div>
             </div>
         </div>
-        <div :class="$style.button1" :style="{ backgroundColor: isFormValid ? '#C54966' : '#CCCCCC' }"
+        <button :class="$style.button1" :style="{ backgroundColor: isFormValid ? '#C54966' : '#CCCCCC' }"
             :disabled="!isFormValid" @click="login">
             <b :class="$style.b1">로그인</b>
-        </div>
+        </button>
     </div>
 </template>
+
 <script lang="js">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import MainHeader from '../../components/MainHeader.vue';
 import axios from 'axios';
@@ -55,7 +56,7 @@ export default defineComponent({
                 '@naver.com',
                 '@daum.net'
             ]
-        }
+        };
     },
     watch: {
         emailPrefix() {
@@ -95,10 +96,11 @@ export default defineComponent({
                 }
             } catch (error) {
                 console.error('Error login member:', error.response ? error.response.data : error);
+                alert('로그인에 실패했습니다. 다시 시도해주세요.');
             }
         },
         goToSignup() {
-            this.router.push('/signup');
+            this.$router.push('/signup');
         }
     },
     computed: {
@@ -108,17 +110,14 @@ export default defineComponent({
                 this.formData.password
             );
         }
-    },
-    setup() {
-        const router = useRouter();
-
-        return {
-            router,
-        };
     }
-})
+});
 </script>
 <style module>
+.button1 {
+    z-index: 1000;
+}
+
 .signupButton {
     position: relative;
     top: 20%;
