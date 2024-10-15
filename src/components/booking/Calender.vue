@@ -38,12 +38,16 @@
 <script setup lang="js">
 import { useMusicalDatesStore } from "@/stores/musicalDatesStore";
 import { computed, onMounted, ref } from "vue";
+import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 const emit = defineEmits(['dateSelected']);
 const musicalDatesStore = useMusicalDatesStore();
+const router = useRouter();
 
 const currentDate = ref(new Date());
 const selectedDate = ref(null);
+const waitingCount = ref(0);
 
 const currentYear = computed(() => currentDate.value.getFullYear());
 const currentMonth = computed(() => currentDate.value.getMonth());
@@ -95,7 +99,6 @@ const resetDate = () => {
 	selectedDate.value = null; // 선택된 날짜를 초기화하여 선택을 취소
 };
 
-
 const selectDate = (date) => {
 	selectedDate.value = date; // Date 객체로 설정
 	emit('dateSelected', formatDate(date)); // 포맷된 날짜로 이벤트 발생
@@ -129,11 +132,20 @@ const nextMonth = () => {
 };
 
 onMounted(async () => {
-	setToday();
-	if (musicalDatesStore.musicalId) {
-		await musicalDatesStore.fetchMusicalDates(musicalDatesStore.musicalId);
-	} else {
-		musicalDatesStore.fetchMusicalDates(1);
+	try {
+		const id = 1; // 필요한 ID로 수정
+		const response = await axios.get(
+			`https://matalwallet.duckdns.org/metal-wallet-server/api/musicals/${id}/dates`
+		);
+		waitingCount.value = response.data.waiting_count;
+		if (waitingCount.value === 0) {
+			router.push("/waiting");
+		} else {
+			setToday();
+			await musicalDatesStore.fetchMusicalDates(id);
+		}
+	} catch (error) {
+		console.error("날짜 정보를 불러오는 중 오류 발생:", error);
 	}
 });
 </script>
