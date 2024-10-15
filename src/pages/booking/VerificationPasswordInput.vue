@@ -8,7 +8,7 @@
       <p :class="$style.text">
         <span :class="$style.highlight">{{
           firstInput ? "입력" : "다시 한번 입력"
-        }}</span>
+          }}</span>
         <span>해주세요.</span>
       </p>
     </b>
@@ -139,7 +139,7 @@ export default defineComponent({
 
       try {
         const response = await axios.post(
-          `https://matalwallet.duckdns.org/metal-wallet-server/api/tickets`,
+          `https://matalwallet.duckdns.org/api/metal-wallet-server/api/tickets`,
           formData,
           {
             headers: {
@@ -149,6 +149,12 @@ export default defineComponent({
         );
         console.log("Tickets booked successfully:", response.data);
       } catch (error) {
+        // 백엔드 에러 응답 처리
+        if (error.response && error.response.data && error.response.data.resultMsg) {
+          alert(`에러 발생: ${error.response.data.resultMsg}`);
+        } else {
+          alert('서버와의 통신 중 문제가 발생했습니다.');
+        }
         console.error(
           "Error booking tickets:",
           error.response ? error.response.data : error.message
