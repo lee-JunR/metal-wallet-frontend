@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.div">
-    <BackHeader />
+    <BackHeader @click="goBack" />
     <div :class="$style.groupParent">
       <!-- 좌석선택 -->
       <div :class="$style.vectorParent" @click="sectionsSelect">
@@ -127,6 +127,9 @@ export default defineComponent({
       if (type === "S") return 160000;
       if (type === "A") return 130000;
       return 0;
+    },
+    goBack() {
+      window.history.back();
     },
   },
 });
