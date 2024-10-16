@@ -61,27 +61,23 @@ export default {
 			router.push(`/musical/${musicalId}`);
 		};
 
-		onMounted(() => {
-			// 초기 로딩 시 뮤지컬 날짜를 가져오는 메소드 호출
-			musicalDatesStore.fetchMusicalDates(musicalId);
+		onMounted(async () => {
+			try {
+				const id = 1; // 필요한 ID로 수정
+				const response = await axios.get(
+					`https://matalwallet.duckdns.org/metal-wallet-server/api/musicals/${id}/dates`
+				);
+				waitingCount.value = response.data.waiting_count;
 
-			onMounted(async () => {
-				try {
-					const id = 1; // 필요한 ID로 수정
-					const response = await axios.get(
-						`https://matalwallet.duckdns.org/metal-wallet-server/api/musicals/${id}/dates`
-					);
-					waitingCount.value = response.data.waiting_count;
-					if (waitingCount.value === 0) {
-						router.push("/waiting");
-					} else {
-						setToday();
-						await musicalDatesStore.fetchMusicalDates(id);
-					}
-				} catch (error) {
-					console.error("날짜 정보를 불러오는 중 오류 발생:", error);
+				if (waitingCount.value === 0) {
+					router.push("/waiting");
+				} else {
+					setToday();
+					await musicalDatesStore.fetchMusicalDates(id);
 				}
-			});
+			} catch (error) {
+				console.error("날짜 정보를 불러오는 중 오류 발생:", error);
+			}
 		});
 
 		return {
