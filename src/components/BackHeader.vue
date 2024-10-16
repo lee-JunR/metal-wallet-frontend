@@ -1,5 +1,5 @@
 <template>
-	<div :class="$style.weuibackFilledParent" @click="goBack">
+	<div :class="$style.weuibackFilledParent">
 		<img :class="$style.weuibackFilledIcon" alt="뒤로가기" :src="backIcon" />
 		<b :class="$style.b">뒤로가기</b>
 	</div>
@@ -16,11 +16,11 @@ export default defineComponent({
 			backIcon,
 		};
 	},
-	methods: {
-		goBack() {
-			window.history.back();
-		}
-	}
+	// methods: {
+	// 	goBack() {
+	// 		window.history.back();
+	// 	}
+	// }
 });
 </script>
 

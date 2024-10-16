@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.container">
     <div :class="$style.content">
-      <BackHeader />
+      <BackHeader @click="goBack" />
       <div :class="$style.inner">
         <b :class="$style.pageName">결제 내역</b>
       </div>
@@ -104,6 +104,11 @@ export default defineComponent({
     formatCurrency(amount) {
       return `${amount.toLocaleString()}원`;
     },
+
+    goBack() {
+      this.$router.push("/mypage");
+    },
+
   },
 });
 </script>

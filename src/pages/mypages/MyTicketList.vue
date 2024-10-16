@@ -1,6 +1,6 @@
 <template>
     <div :class="$style.div">
-        <BackHeader />
+        <BackHeader @click="goBack" />
         <div :class="$style.ticketContainer">
             <div :class="$style.groupParent">
                 <TicketCard v-for="(ticket, index) in tickets" :key="index" :ticket="ticket"
@@ -101,6 +101,9 @@ export default defineComponent({
             const newTickets = await this.ticketStore.fetchTickets(cursor, reset);
             this.nextCursor = this.ticketStore.getNextCursor();
             this.isLoading = false;
+        },
+        goBack() {
+            this.$router.push("/mypage");
         },
     },
     mounted() {

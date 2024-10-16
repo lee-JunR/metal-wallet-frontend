@@ -1,6 +1,9 @@
 <template>
 	<div :class="$style.div">
-		<BackHeader @click="goBack" />
+		<div :class="$style.weuibackFilledParent" @click="goBack">
+			<img :class="$style.weuibackFilledIcon" alt="뒤로가기" src="@/assets/mypages/backIcon.svg" />
+			<b :class="$style.b">뒤로가기</b>
+		</div>
 		<div :class="$style.groupParent">
 			<Calender :musicalId="musicalId" @dateSelected="onDateSelected" />
 			<div v-if="seatAvailabilityStore.historyList.length" :class="$style.groupContainer">
@@ -140,5 +143,32 @@ export default {
 .error-message {
 	color: red;
 	/* 에러 메시지 스타일 */
+}
+
+.weuibackFilledParent {
+	display: flex;
+	align-items: center;
+	position: absolute;
+	top: 16px;
+	left: 14px;
+	width: 82px;
+	height: 22px;
+	font-size: 16px;
+	color: #6e6e6e;
+	padding: 14px;
+	font-family: "bamin_title";
+}
+
+.weuibackFilledIcon {
+	position: absolute;
+	left: 0px;
+	width: 11px;
+	height: 22px;
+	overflow: hidden;
+}
+
+.b {
+	position: absolute;
+	left: 18px;
 }
 </style>
