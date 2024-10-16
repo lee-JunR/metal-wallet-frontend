@@ -50,7 +50,9 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      checkWaitingCount(); // 초기 체크
+      setTimeout(() => {
+        checkWaitingCount(); // 1초 대기 후 초기 체크
+      }, 1000); // 1000ms = 1초
     });
 
     return {
