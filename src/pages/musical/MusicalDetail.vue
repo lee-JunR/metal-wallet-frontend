@@ -101,7 +101,8 @@ export default defineComponent({
 		},
 		redirectToBooking() {
 			const id = this.$route.params.id;
-			this.$router.push(`/booking/${id}/dates`);
+			// id 값을 쿼리 파라미터로 함께 전달
+			this.$router.push({ path: '/waiting', query: { id } });
 		},
 		async fetchMusical(id) {
 			try {

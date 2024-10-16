@@ -32,15 +32,25 @@ export default defineComponent({
 
     const checkWaitingCount = async () => {
       try {
-        const id = 1; // 필요한 ID로 수정
+        // 라우트 쿼리 파라미터에서 id 값을 가져옴
+        const id = router.currentRoute.value.query.id;
+
+        // id 값이 없을 경우 예외 처리
+        if (!id) {
+          throw new Error("뮤지컬 ID가 제공되지 않았습니다.");
+        }
+
+        // id를 사용해 API 요청
         const response = await axios.get(
           `https://matalwallet.duckdns.org/metal-wallet-server/api/musicals/${id}/dates`
         );
+
         waitingCount.value = response.data.waiting_count;
         console.log(waitingCount.value);
 
-        if (waitingCount.value !== 0) {
-          router.push("/booking/1/dates"); // 바로 다음 페이지로 이동
+        // waitingCount 값이 없을 경우 다음 페이지로 이동
+        if (waitingCount.value === undefined) {
+          router.push(`/booking/${id}/dates`);
         } else {
           setTimeout(checkWaitingCount, 2000); // 2초 후 다시 체크
         }

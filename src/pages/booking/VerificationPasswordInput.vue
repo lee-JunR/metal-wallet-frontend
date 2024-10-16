@@ -139,7 +139,7 @@ export default defineComponent({
 
       try {
         const response = await axios.post(
-          `https://matalwallet.duckdns.org/api/metal-wallet-server/api/tickets`,
+          `https://matalwallet.duckdns.org/metal-wallet-server/api/tickets`,
           formData,
           {
             headers: {
