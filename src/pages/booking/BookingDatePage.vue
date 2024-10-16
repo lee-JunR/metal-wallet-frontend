@@ -34,6 +34,7 @@ import Calender from "@/components/booking/Calender.vue";
 import ShowTimeInfo from "@/components/booking/ShowTimeInfo.vue";
 import { useMusicalDatesStore } from "@/stores/musicalDatesStore";
 import { useSeatAvailabilityStore } from "@/stores/seatAvailabilityStore";
+import axios from 'axios';
 import { onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
